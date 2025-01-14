@@ -1,18 +1,18 @@
 import { Request, Response } from "express";
 import { Model, SchemaType } from "mongoose";
 
-class BaseController<T extends object & { userId?: string }> {
+class BaseController<T extends object & { sender: string }> {
   model: Model<T>;
 
   constructor(model: Model<T>) {
     this.model = model;
   }
 
-  async getAll(req: Request<{}, {}, {}, { userId: string }>, res: Response) {
-    const { userId } = req.query;
+  async getAll(req: Request<{}, {}, {}, { sender: string }>, res: Response) {
+    const { sender } = req.query;
     try {
-      if (userId) {
-        const item = await this.model.find({ userId });
+      if (sender) {
+        const item = await this.model.find({ sender });
         res.send(item);
       } else {
         const items = await this.model.find();

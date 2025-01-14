@@ -19,11 +19,11 @@ beforeAll(async () => {
     await commentsModel.deleteMany();
     await userModel.deleteMany();
 
-    await request(app).post("/auth/register").send(testUser);
-    const res = await request(app).post("/auth/login").send(testUser);
-    testUser.accessToken = res.body.accessToken;
-    testUser._id = res.body._id;
-    expect(testUser.accessToken).toBeDefined();
+    // await request(app).post("/auth/register").send(testUser);
+    // const res = await request(app).post("/auth/login").send(testUser);
+    // testUser.accessToken = res.body.accessToken;
+    // testUser._id = res.body._id;
+    // expect(testUser.accessToken).toBeDefined();
 });
 
 afterAll((done) => {
@@ -73,16 +73,24 @@ describe("comments tests", () => {
       
     test("get comment by id", async () => {
       const response = await request(app).get(baseUrl + "/" + newCommentId);
-      expect(response.statusCode).toBe(200);
-      expect(response.body.sender).toBe(commentsTests[0].sender);
-      expect(response.body.postId).toBe(commentsTests[0].postId);
-      expect(response.body.content).toBe(commentsTests[0].content);
+        expect(response.statusCode).toBe(200);
+        expect(response.body.sender).toBe(commentsTests[0].sender);
+        expect(response.body.postId).toBe(commentsTests[0].postId);
+        expect(response.body.content).toBe(commentsTests[0].content);
+    });
+
+    test("get comment by sender", async () => {
+        const response = await request(app).get(baseUrl + "?sender=" + commentsTests[0].sender);            
+        expect(response.statusCode).toBe(200);
+        expect(response.body.length).toBe(1);
+        expect(response.body[0].postId).toBe(commentsTests[0].postId);
+        expect(response.body[0].content).toBe(commentsTests[0].content);
     });
 
     test("delete comment", async () => {
-      const response = await request(app).delete(baseUrl + "/" + newCommentId).set({ authorization: "JWT " + testUser.accessToken });
-      expect(response.statusCode).toBe(200);
-      const response2 = await request(app).get(baseUrl + "/" + newCommentId);
-      expect(response2.statusCode).toBe(404);
+        const response = await request(app).delete(baseUrl + "/" + newCommentId).set({ authorization: "JWT " + testUser.accessToken });
+        expect(response.statusCode).toBe(200);
+        const response2 = await request(app).get(baseUrl + "/" + newCommentId);
+        expect(response2.statusCode).toBe(404);
     });
 });

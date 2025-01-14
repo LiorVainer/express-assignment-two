@@ -50,7 +50,7 @@ const postsTests = [
     },
     {
         "title": "Hello3",
-        "sender": "Lior",
+        "sender": "rom",
         "content": "Hello World..."
     }
 ]
@@ -77,6 +77,14 @@ describe("posts tests", () => {
       expect(response.body.title).toBe(postsTests[0].title);
       expect(response.body.sender).toBe(postsTests[0].sender);
       expect(response.body.content).toBe(postsTests[0].content);
+    });
+
+    test("get post by sender", async () => {
+        const response = await request(app).get(baseUrl + "?sender=" + postsTests[0].sender);
+        expect(response.statusCode).toBe(200);
+        expect(response.body.length).toBe(1);
+        expect(response.body[0].title).toBe(postsTests[0].title);
+        expect(response.body[0].content).toBe(postsTests[0].content);
     });
 
     test("delete post", async () => {
