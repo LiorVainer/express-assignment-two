@@ -1,9 +1,12 @@
-import initApp from "./server";
+import {initApp} from "./server";
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT;
 
-initApp().then((app) => {
+try {
+    const app = await initApp();
     app.listen(port, () => {
         console.log(`Example app listening at http://localhost:${port}`);
     });
-});
+} catch (error) {
+    console.error('Failed to initialize the app:', error);
+}
