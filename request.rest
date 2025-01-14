@@ -1,4 +1,4 @@
-POST http://localhost:3000/auth/login
+POST http://localhost:3000/auth/register
 Content-Type: application/json
 
 {
@@ -6,6 +6,15 @@ Content-Type: application/json
   "password": "testpassword"
 }
 
+###
+
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+  "email": "test@user.com",
+  "password": "testpassword"
+}
 
 ###
 
@@ -17,34 +26,41 @@ GET http://localhost:3000/posts?sender=Lior
 
 ###
 
-GET http://localhost:3000/comments?sender=Lior
-
-###
-
 GET http://localhost:3000/posts/677acaa66909ab5af8ba2dbe
 
 ###
 
-POST http://localhost:3000/posts Content-Type: application/json
+POST http://localhost:3000/posts
+Content-Type: application/json
 
 {
-"title": "Hello", "sender": "Lior", "content": "Hello World..."
+    "title": "Hello",
+    "sender": "Lior",
+    "content": "Hello World..."
 }
+
 
 ###
 
-PUT http://localhost:3000/posts/677acaa66909ab5af8ba2dbe Content-Type: application/json
+PUT http://localhost:3000/posts/677acaa66909ab5af8ba2dbe
+Content-Type: application/json
 
 {
-"title": "Updated Title", "sender": "Lior", "content": "Updated content..."
+    "title": "Updated Title",
+    "sender": "Lior",
+    "content": "Updated content..."
 }
+
 
 ###
 
-POST http://localhost:3000/comments Content-Type: application/json
+POST http://localhost:3000/comments
+Content-Type: application/json
 
 {
-"sender": "Kevin3", "postId": "677acaa66909ab5af8ba2dbe", "content": "My first comment"
+    "sender": "rom",
+    "postId": "aaaaa",
+    "content": "comment 1"
 }
 
 ###
@@ -57,16 +73,18 @@ GET http://localhost:3000/comments/677ebe39d09e0306a94ec529
 
 ###
 
-PUT http://localhost:3000/comments/677ebe39d09e0306a94ec529 Content-Type: application/json
+PUT http://localhost:3000/comments/677ebe39d09e0306a94ec529
+Content-Type: application/json
 
 {
-"sender": "Kevin", "postId": "67757ca8ded1dd0ab69182de", "content": "My second comment"
+    "sender": "Kevin",
+    "postId": "67757ca8ded1dd0ab69182de",
+    "content": "My second comment"
 }
 
 ###
-
 GET http://localhost:3000/comments/post/677acaa66909ab5af8ba2dbe
 
 ###
-
 DELETE http://localhost:3000/comments/677ebe39d09e0306a94ec529
+

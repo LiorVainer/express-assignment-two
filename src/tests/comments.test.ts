@@ -3,13 +3,27 @@ import {initApp} from "../server";
 import mongoose from "mongoose";
 import {Express} from "express";
 import commentsModel from "../models/comments_model";
+import {UserWithTokens} from "../types/user.types";
+import { userModel } from "../models/user.model";
 
 let app: Express;
+
+const testUser: UserWithTokens = {
+    email: "test@user.com",
+    password: "testpassword",
+}
 
 beforeAll(async () => {
     console.log("beforeAll");
     app = await initApp();
     await commentsModel.deleteMany();
+    await userModel.deleteMany();
+
+    await request(app).post("/auth/register").send(testUser);
+    const res = await request(app).post("/auth/login").send(testUser);
+    testUser.accessToken = res.body.accessToken;
+    testUser._id = res.body._id;
+    expect(testUser.accessToken).toBeDefined();
 });
 
 afterAll((done) => {
@@ -20,57 +34,55 @@ afterAll((done) => {
 
 const baseUrl = "/comments";
 
+let newCommentId = "";
+
+
 const commentsTests = [
     {
-        "sender": "Eliav",
-        "postId": "adadadada",
-        "content": "This is a comment"
+        "sender": "rom",
+        "postId": "aaaaa",
+        "content": "comment 1"
     },
     {
-        "sender": "Eliav2",
-        "postId": "adadadada",
-        "content": "This is a comment 2"
+        "sender": "rom",
+        "postId": "bbbb",
+        "content": "comment 2"
     },
     {
-        "sender": "Eliav",
-        "postId": "adadadada",
-        "content": "This is a comment 3"
+        "sender": "lior",
+        "postId": "cccccc",
+        "content": "comment 3"
     }
 ]
 
-let commentId = "";
-
-describe("comments Tests", () => {
+describe("comments tests", () => {
     test("get all comments", async () => {
-        const response = await request(app).get("/comments");
+        const response = await request(app).get(baseUrl);
         expect(response.statusCode).toBe(200);
         expect(response.body.length).toBe(0);
-      });
-    
-      test("create Comment", async () => {
-        const response = await request(app).post("/comments").send(commentsTests[0]);
-        expect(response.statusCode).toBe(201);
-        // expect(response.body.comment).toBe(commentsTests[0].content);
-        // expect(response.body.postId).toBe(commentsTests[0].postId);
-        // expect(response.body.owner).toBe(commentsTests[0].sender);
-        commentId = response.body._id;
-      });
-    
-      test("get comment by sender", async () => {
-        const response = await request(app).get("/comments?sender=" + commentsTests[0].sender);
-        expect(response.statusCode).toBe(200);
-        expect(response.body.length).toBe(1);
-        // expect(response.body[0].comment).toBe(testComments[0].comment);
-        // expect(response.body[0].postId).toBe(testComments[0].postId);
-        // expect(response.body[0].owner).toBe(testComments[0].owner);
-      });
-    
-      test("Comments get post by id", async () => {
-        const response = await request(app).get("/comments/" + commentId);
-        expect(response.statusCode).toBe(200);
-        // expect(response.body.comment).toBe(testComments[0].comment);
-        // expect(response.body.postId).toBe(testComments[0].postId);
-        // expect(response.body.owner).toBe(testComments[0].owner);
-      });    
+    });
 
+    test("create new comment", async () => {
+        const response = await request(app).post(baseUrl).send(commentsTests[0]).set({ authorization: "JWT " + testUser.accessToken });;
+        expect(response.statusCode).toBe(201);
+        expect(response.body.sender).toBe(commentsTests[0].sender);
+        expect(response.body.postId).toBe(commentsTests[0].postId);
+        expect(response.body.content).toBe(commentsTests[0].content);
+        newCommentId = response.body._id;
+    });
+      
+    test("get comment by id", async () => {
+      const response = await request(app).get(baseUrl + "/" + newCommentId);
+      expect(response.statusCode).toBe(200);
+      expect(response.body.sender).toBe(commentsTests[0].sender);
+      expect(response.body.postId).toBe(commentsTests[0].postId);
+      expect(response.body.content).toBe(commentsTests[0].content);
+    });
+
+    test("delete comment", async () => {
+      const response = await request(app).delete(baseUrl + "/" + newCommentId).set({ authorization: "JWT " + testUser.accessToken });
+      expect(response.statusCode).toBe(200);
+      const response2 = await request(app).get(baseUrl + "/" + newCommentId);
+      expect(response2.statusCode).toBe(404);
+    });
 });
