@@ -3,6 +3,9 @@ import express, {Express} from "express";
 import mongoose from "mongoose";
 import authRoutes from "./routes/auth.route";
 import dotenv from "dotenv"
+import commentsRoute from "./routes/comments_route";
+import postsRoute from "./routes/posts_route";
+
 
 dotenv.config();
 const app = express();
@@ -14,6 +17,8 @@ db.on("error", (error) => console.error(error));
 db.once("open", () => console.log("Connected to database"));
 
 app.use("/auth", authRoutes);
+app.use("/comments", commentsRoute);
+app.use("/posts", postsRoute);
 
 export const initApp = async (): Promise<Express> => {
     const dbConnect = process.env.DB_CONNECT;

@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { Model, SchemaType } from "mongoose";
 
-class BaseController<T extends object & { userId: string }> {
+class BaseController<T extends object & { userId?: string }> {
   model: Model<T>;
 
   constructor(model: Model<T>) {
