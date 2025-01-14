@@ -19,11 +19,11 @@ beforeAll(async () => {
     await postModel.deleteMany();
     await userModel.deleteMany();
 
-    // await request(app).post("/auth/register").send(testUser);
-    // const res = await request(app).post("/auth/login").send(testUser);
-    // testUser.accessToken = res.body.accessToken;
-    // testUser._id = res.body._id;
-    // expect(testUser.accessToken).toBeDefined();
+    await request(app).post("/auth/register").send(testUser);
+    const res = await request(app).post("/auth/login").send(testUser);
+    testUser.accessToken = res.body.accessToken;
+    testUser._id = res.body._id;
+    expect(testUser.accessToken).toBeDefined();
 });
 
 afterAll((done) => {
@@ -63,7 +63,7 @@ describe("posts tests", () => {
     });
 
     test("create new post", async () => {
-        const response = await request(app).post(baseUrl).send(postsTests[0]);;
+        const response = await request(app).post(baseUrl).send(postsTests[0]).set({ authorization: "JWT " + testUser.accessToken });;
         expect(response.statusCode).toBe(201);
         expect(response.body.title).toBe(postsTests[0].title);
         expect(response.body.sender).toBe(postsTests[0].sender);
@@ -88,7 +88,7 @@ describe("posts tests", () => {
     });
 
     test("delete post", async () => {
-      const response = await request(app).delete(baseUrl + "/" + newPostId);
+      const response = await request(app).delete(baseUrl + "/" + newPostId).set({ authorization: "JWT " + testUser.accessToken });
       expect(response.statusCode).toBe(200);
       const response2 = await request(app).get(baseUrl + "/" + newPostId);
       expect(response2.statusCode).toBe(404);

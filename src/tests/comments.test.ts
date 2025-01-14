@@ -19,11 +19,11 @@ beforeAll(async () => {
     await commentsModel.deleteMany();
     await userModel.deleteMany();
 
-    // await request(app).post("/auth/register").send(testUser);
-    // const res = await request(app).post("/auth/login").send(testUser);
-    // testUser.accessToken = res.body.accessToken;
-    // testUser._id = res.body._id;
-    // expect(testUser.accessToken).toBeDefined();
+    await request(app).post("/auth/register").send(testUser);
+    const res = await request(app).post("/auth/login").send(testUser);
+    testUser.accessToken = res.body.accessToken;
+    testUser._id = res.body._id;
+    expect(testUser.accessToken).toBeDefined();
 });
 
 afterAll((done) => {
