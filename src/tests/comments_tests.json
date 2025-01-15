@@ -1,0 +1,17 @@
+[
+    {
+        "userId": "rom",
+        "postId": "aaaaa",
+        "content": "comment 1"
+    },
+    {
+        "userId": "rom",
+        "postId": "bbbb",
+        "content": "comment 2"
+    },
+    {
+        "userId": "lior",
+        "postId": "cccccc",
+        "content": "comment 3"
+    }
+]

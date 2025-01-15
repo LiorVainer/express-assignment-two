@@ -1,7 +1,90 @@
+POST http://localhost:3000/auth/register
+Content-Type: application/json
+
+{
+  "email": "mytest@user.com",
+  "password": "111"
+}
+
+###
+
 POST http://localhost:3000/auth/login
 Content-Type: application/json
 
 {
-  "email": "test@user.com",
-  "password": "testpassword"
+  "email": "mytest@user.com",
+  "password": "111"
 }
+
+###
+
+GET http://localhost:3000/posts
+
+###
+
+GET http://localhost:3000/posts?userId=Lior
+
+###
+
+GET http://localhost:3000/posts/677acaa66909ab5af8ba2dbe
+
+###
+
+POST http://localhost:3000/posts
+Content-Type: application/json
+
+{
+    "title": "Hello",
+    "userId": "Lior",
+    "content": "Hello World..."
+}
+
+
+###
+
+PUT http://localhost:3000/posts/677acaa66909ab5af8ba2dbe
+Content-Type: application/json
+
+{
+    "title": "Updated Title",
+    "userId": "Lior",
+    "content": "Updated content..."
+}
+
+
+###
+
+POST http://localhost:3000/comments
+Content-Type: application/json
+
+{
+    "userId": "rom",
+    "postId": "aaaaa",
+    "content": "comment 1"
+}
+
+###
+
+GET http://localhost:3000/comments
+
+###
+
+GET http://localhost:3000/comments/677ebe39d09e0306a94ec529
+
+###
+
+PUT http://localhost:3000/comments/677ebe39d09e0306a94ec529
+Content-Type: application/json
+
+{
+    "userId": "Kevin",
+    "postId": "67757ca8ded1dd0ab69182de",
+    "content": "My second comment"
+}
+
+###
+GET http://localhost:3000/comments/post/677acaa66909ab5af8ba2dbe
+
+###
+DELETE http://localhost:3000/comments/677ebe39d09e0306a94ec529
+
