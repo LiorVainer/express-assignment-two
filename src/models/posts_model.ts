@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 export interface IPost {
     title: string;
     content: string;
-    sender: string;
+    userId: string;
   }
   
 
@@ -13,7 +13,7 @@ const postSchema = new mongoose.Schema<IPost>({
     required: true,
   },
   content: String,
-  sender: {
+  userId: {
     type: String,
     required: true,
   },

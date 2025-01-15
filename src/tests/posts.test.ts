@@ -40,17 +40,17 @@ let newPostId = "";
 const postsTests = [
     {
         "title": "Hello1",
-        "sender": "Lior",
+        "userId": "Lior",
         "content": "Hello World..."
     },
     {
         "title": "Hello2",
-        "sender": "Lior",
+        "userId": "Lior",
         "content": "Hello World..."
     },
     {
         "title": "Hello3",
-        "sender": "rom",
+        "userId": "rom",
         "content": "Hello World..."
     }
 ]
@@ -66,7 +66,7 @@ describe("posts tests", () => {
         const response = await request(app).post(baseUrl).send(postsTests[0]).set({ authorization: "JWT " + testUser.accessToken });;
         expect(response.statusCode).toBe(201);
         expect(response.body.title).toBe(postsTests[0].title);
-        expect(response.body.sender).toBe(postsTests[0].sender);
+        expect(response.body.userId).toBe(postsTests[0].userId);
         expect(response.body.content).toBe(postsTests[0].content);
         newPostId = response.body._id;
     });
@@ -75,12 +75,12 @@ describe("posts tests", () => {
       const response = await request(app).get(baseUrl + "/" + newPostId);
       expect(response.statusCode).toBe(200);
       expect(response.body.title).toBe(postsTests[0].title);
-      expect(response.body.sender).toBe(postsTests[0].sender);
+      expect(response.body.userId).toBe(postsTests[0].userId);
       expect(response.body.content).toBe(postsTests[0].content);
     });
 
-    test("get post by sender", async () => {
-        const response = await request(app).get(baseUrl + "?sender=" + postsTests[0].sender);
+    test("get post by userId", async () => {
+        const response = await request(app).get(baseUrl + "?userId=" + postsTests[0].userId);
         expect(response.statusCode).toBe(200);
         expect(response.body.length).toBe(1);
         expect(response.body[0].title).toBe(postsTests[0].title);

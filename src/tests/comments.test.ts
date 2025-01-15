@@ -39,17 +39,17 @@ let newCommentId = "";
 
 const commentsTests = [
     {
-        "sender": "rom",
+        "userId": "rom",
         "postId": "aaaaa",
         "content": "comment 1"
     },
     {
-        "sender": "rom",
+        "userId": "rom",
         "postId": "bbbb",
         "content": "comment 2"
     },
     {
-        "sender": "lior",
+        "userId": "lior",
         "postId": "cccccc",
         "content": "comment 3"
     }
@@ -65,7 +65,7 @@ describe("comments tests", () => {
     test("create new comment", async () => {
         const response = await request(app).post(baseUrl).send(commentsTests[0]).set({ authorization: "JWT " + testUser.accessToken });;
         expect(response.statusCode).toBe(201);
-        expect(response.body.sender).toBe(commentsTests[0].sender);
+        expect(response.body.userId).toBe(commentsTests[0].userId);
         expect(response.body.postId).toBe(commentsTests[0].postId);
         expect(response.body.content).toBe(commentsTests[0].content);
         newCommentId = response.body._id;
@@ -74,13 +74,13 @@ describe("comments tests", () => {
     test("get comment by id", async () => {
       const response = await request(app).get(baseUrl + "/" + newCommentId);
         expect(response.statusCode).toBe(200);
-        expect(response.body.sender).toBe(commentsTests[0].sender);
+        expect(response.body.userId).toBe(commentsTests[0].userId);
         expect(response.body.postId).toBe(commentsTests[0].postId);
         expect(response.body.content).toBe(commentsTests[0].content);
     });
 
-    test("get comment by sender", async () => {
-        const response = await request(app).get(baseUrl + "?sender=" + commentsTests[0].sender);            
+    test("get comment by userId", async () => {
+        const response = await request(app).get(baseUrl + "?userId=" + commentsTests[0].userId);            
         expect(response.statusCode).toBe(200);
         expect(response.body.length).toBe(1);
         expect(response.body[0].postId).toBe(commentsTests[0].postId);

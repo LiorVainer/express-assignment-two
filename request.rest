@@ -2,7 +2,7 @@ POST http://localhost:3000/auth/register
 Content-Type: application/json
 
 {
-  "email": "test3@user.com",
+  "email": "mytest@user.com",
   "password": "111"
 }
 
@@ -12,7 +12,7 @@ POST http://localhost:3000/auth/login
 Content-Type: application/json
 
 {
-  "email": "test2@user.com",
+  "email": "mytest@user.com",
   "password": "111"
 }
 
@@ -22,7 +22,7 @@ GET http://localhost:3000/posts
 
 ###
 
-GET http://localhost:3000/posts?sender=Lior
+GET http://localhost:3000/posts?userId=Lior
 
 ###
 
@@ -35,7 +35,7 @@ Content-Type: application/json
 
 {
     "title": "Hello",
-    "sender": "Lior",
+    "userId": "Lior",
     "content": "Hello World..."
 }
 
@@ -47,7 +47,7 @@ Content-Type: application/json
 
 {
     "title": "Updated Title",
-    "sender": "Lior",
+    "userId": "Lior",
     "content": "Updated content..."
 }
 
@@ -58,7 +58,7 @@ POST http://localhost:3000/comments
 Content-Type: application/json
 
 {
-    "sender": "rom",
+    "userId": "rom",
     "postId": "aaaaa",
     "content": "comment 1"
 }
@@ -77,7 +77,7 @@ PUT http://localhost:3000/comments/677ebe39d09e0306a94ec529
 Content-Type: application/json
 
 {
-    "sender": "Kevin",
+    "userId": "Kevin",
     "postId": "67757ca8ded1dd0ab69182de",
     "content": "My second comment"
 }
