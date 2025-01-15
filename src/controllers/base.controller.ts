@@ -19,7 +19,7 @@ class BaseController<T extends object & { userId: string }> {
         res.send(items);
       }
     } catch (error) {
-      res.status(400).send(error);
+      res.status(500).send(error);
     }
   }
 
@@ -34,7 +34,7 @@ class BaseController<T extends object & { userId: string }> {
         res.status(404).send("not found");
       }
     } catch (error) {
-      res.status(400).send(error);
+      res.status(500).send(error);
     }
   }
 
@@ -44,7 +44,7 @@ class BaseController<T extends object & { userId: string }> {
       const item = await this.model.create(body);
       res.status(201).send(item);
     } catch (error) {
-      res.status(400).send(error);
+      res.status(500).send(error);
     }
   }
 
@@ -54,7 +54,7 @@ class BaseController<T extends object & { userId: string }> {
       await this.model.findByIdAndDelete(id);
       res.status(200).send("deleted");
     } catch (error) {
-      res.status(400).send(error);
+      res.status(500).send(error);
     }
   }
 }

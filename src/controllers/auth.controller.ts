@@ -25,7 +25,7 @@ export const register: RequestHandler<
     });
     res.status(200).send(user);
   } catch (err) {
-    res.status(400).send(err);
+    res.status(500).send(err);
   }
 };
 
@@ -83,6 +83,7 @@ export const login = async (req: Request, res: Response) => {
       user.refreshTokens = [];
     }
 
+    // generate token
     const tokens = generateTokens(user._id);
 
     if (!tokens) {
@@ -99,7 +100,7 @@ export const login = async (req: Request, res: Response) => {
       _id: user._id,
     });
   } catch (err) {
-    res.status(400).send(err);
+    res.status(500).send(err);
   }
 };
 
@@ -145,13 +146,13 @@ export const logout = async (req: Request, res: Response) => {
   try {
     const user = await verifyRefreshToken(req.body.refreshToken);
     if (!user) {
-      res.status(400).send("Failed to logout");
+      res.status(400).send("Invalid refresh token");
       return;
     }
     await user.save();
     res.status(200).send("Logged out successfully");
   } catch (err) {
-    res.status(400).send("Failed to logout");
+    res.status(500).send("Failed to logout");
   }
 };
 
@@ -187,7 +188,7 @@ export const refresh: RequestHandler<
       _id: user._id,
     });
   } catch (err) {
-    res.status(400).send("Invalid refresh token");
+    res.status(500).send("Server Error");
   }
 };
 
