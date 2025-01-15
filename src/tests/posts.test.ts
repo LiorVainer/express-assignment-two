@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 import {Express} from "express";
 import {UserWithTokens} from "../types/user.types";
 import { userModel } from "../models/user.model";
-import postModel from "../models/posts_model";
+import { postModel } from "../models/posts_model";
 import postsTests from "./posts_tests.json";
 
 let app: Express;

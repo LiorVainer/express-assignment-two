@@ -2,7 +2,7 @@ import request from "supertest";
 import {initApp} from "../server";
 import mongoose from "mongoose";
 import {Express} from "express";
-import commentsModel from "../models/comments_model";
+import {commentModel} from "../models/comments_model";
 import {UserWithTokens} from "../types/user.types";
 import { userModel } from "../models/user.model";
 import commentsTests from "./comments_tests.json";
@@ -17,7 +17,7 @@ const testUser: UserWithTokens = {
 beforeAll(async () => {
     console.log("beforeAll");
     app = await initApp();
-    await commentsModel.deleteMany();
+    await commentModel.deleteMany();
     await userModel.deleteMany();
 
     await request(app).post("/auth/register").send(testUser);
