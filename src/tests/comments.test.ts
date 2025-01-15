@@ -5,6 +5,7 @@ import {Express} from "express";
 import commentsModel from "../models/comments_model";
 import {UserWithTokens} from "../types/user.types";
 import { userModel } from "../models/user.model";
+import commentsTests from "./comments_tests.json";
 
 let app: Express;
 
@@ -35,25 +36,6 @@ afterAll((done) => {
 const baseUrl = "/comments";
 
 let newCommentId = "";
-
-
-const commentsTests = [
-    {
-        "userId": "rom",
-        "postId": "aaaaa",
-        "content": "comment 1"
-    },
-    {
-        "userId": "rom",
-        "postId": "bbbb",
-        "content": "comment 2"
-    },
-    {
-        "userId": "lior",
-        "postId": "cccccc",
-        "content": "comment 3"
-    }
-]
 
 describe("comments tests", () => {
     test("get all comments", async () => {

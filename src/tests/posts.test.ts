@@ -5,6 +5,7 @@ import {Express} from "express";
 import {UserWithTokens} from "../types/user.types";
 import { userModel } from "../models/user.model";
 import postModel from "../models/posts_model";
+import postsTests from "./posts_tests.json";
 
 let app: Express;
 
@@ -35,25 +36,6 @@ afterAll((done) => {
 const baseUrl = "/posts";
 
 let newPostId = "";
-
-
-const postsTests = [
-    {
-        "title": "Hello1",
-        "userId": "Lior",
-        "content": "Hello World..."
-    },
-    {
-        "title": "Hello2",
-        "userId": "Lior",
-        "content": "Hello World..."
-    },
-    {
-        "title": "Hello3",
-        "userId": "rom",
-        "content": "Hello World..."
-    }
-]
 
 describe("posts tests", () => {
     test("get all posts", async () => {
