@@ -5,7 +5,11 @@
   "scripts": {
     "dev": "nodemon -x npx tsx src/App.ts",
     "start": "tsc && node ./dist/app.js",
-    "test": "jest --detectOpenHandles --forceExit --runInBand"
+    "test": "jest --detectOpenHandles --forceExit --runInBand",
+    "test:auth": "jest --detectOpenHandles --forceExit tests/auth.test.ts",
+    "test:users": "jest --detectOpenHandles --forceExit tests/users.test.ts",
+    "test:posts": "jest --detectOpenHandles --forceExit tests/posts.test.ts",
+    "test:coverage": "jest --coverage --runInBand --coverageDirectory=coverage"
   },
   "type": "module",
   "dependencies": {
