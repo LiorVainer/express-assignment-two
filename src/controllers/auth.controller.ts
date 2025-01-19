@@ -136,7 +136,7 @@ const verifyRefreshToken = async (refreshToken: string | undefined) => {
       (token) => token !== refreshToken
     );
   } catch (err) {
-    throw new Error("Invalid Token");
+    return null;
   }
 
   return user;
@@ -152,7 +152,7 @@ export const logout = async (req: Request, res: Response) => {
     await user.save();
     res.status(200).send("Logged out successfully");
   } catch (err) {
-    res.status(500).send("Failed to logout");
+    res.status(500).send("Server Error");
   }
 };
 
