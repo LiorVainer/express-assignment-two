@@ -2,7 +2,7 @@ import express from "express";
 import postsController from "../controllers/posts.controller";
 import { authMiddleware } from "../controllers/auth.controller";
 
-const postsRouter = express.Router();
+const router = express.Router();
 
 /**
  * @swagger
@@ -62,7 +62,7 @@ const postsRouter = express.Router();
  *       500:
  *         description: Error fetching posts
  */
-postsRouter.get("/", postsController.getAll.bind(postsController));
+router.get("/", postsController.getAll.bind(postsController));
 
 /**
  * @swagger
@@ -89,7 +89,7 @@ postsRouter.get("/", postsController.getAll.bind(postsController));
  *       500:
  *         description: Error fetching post
  */
-postsRouter.get("/:id", postsController.getById.bind(postsController));
+router.get("/:id", postsController.getById.bind(postsController));
 
 /**
  * @swagger
@@ -113,7 +113,7 @@ postsRouter.get("/:id", postsController.getById.bind(postsController));
  *       500:
  *         description: Error creating post
  */
-postsRouter.post("/", authMiddleware, postsController.create.bind(postsController));
+router.post("/", authMiddleware, postsController.create.bind(postsController));
 
 /**
  * @swagger
@@ -136,6 +136,6 @@ postsRouter.post("/", authMiddleware, postsController.create.bind(postsControlle
  *       500:
  *         description: Error deleting post
  */
-postsRouter.delete("/:id", authMiddleware, postsController.deleteItem.bind(postsController));
+router.delete("/:id", authMiddleware, postsController.deleteItem.bind(postsController));
 
-export default postsRouter;
+export default router;
