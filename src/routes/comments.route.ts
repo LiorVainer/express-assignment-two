@@ -44,9 +44,6 @@ const router = express.Router();
 
 /**
  * @swagger
- * security:
- *   - bearerAuth: []
- *
  * /comments:
  *   get:
  *     summary: Get all comments
