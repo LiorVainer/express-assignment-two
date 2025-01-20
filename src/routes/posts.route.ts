@@ -33,15 +33,15 @@ const router = express.Router();
  *         _id:
  *           type: string
  *           description: The unique ID of the post
- *         __v:
- *           type: integer
- *           description: Version key
  *       example:
  *         title: "My First Post"
  *         content: "This is the content of my first post."
  *         userId: "12345"
- *         _id: "abcdef123456"
- *         __v: 0
+ *   securitySchemes:
+ *     bearerAuth:
+ *       type: http
+ *       scheme: bearer
+ *       bearerFormat: JWT
  */
 
 /**
@@ -97,6 +97,8 @@ router.get("/:id", postsController.getById.bind(postsController));
  *   post:
  *     summary: Create a new post
  *     tags: [Posts]
+ *     security:
+ *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -121,6 +123,8 @@ router.post("/", authMiddleware, postsController.create.bind(postsController));
  *   delete:
  *     summary: Delete a post by ID
  *     tags: [Posts]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id

@@ -31,22 +31,22 @@ const router = express.Router();
  *         content:
  *           type: string
  *           description: Content of the comment
- *         _id:
- *           type: string
- *           description: The unique ID of the comment
- *         __v:
- *           type: integer
- *           description: Version key
  *       example:
  *         userId: "12345"
  *         postId: "67890"
  *         content: "This is a sample comment."
- *         _id: "abcdef123456"
- *         __v: 0
+ *   securitySchemes:
+ *     bearerAuth:
+ *       type: http
+ *       scheme: bearer
+ *       bearerFormat: JWT
  */
 
 /**
  * @swagger
+ * security:
+ *   - bearerAuth: []
+ *
  * /comments:
  *   get:
  *     summary: Get all comments
@@ -98,6 +98,8 @@ router.get("/:id", commentsController.getById.bind(commentsController));
  *   post:
  *     summary: Create a new comment
  *     tags: [Comments]
+ *     security:
+ *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -122,6 +124,8 @@ router.post("/", authMiddleware, commentsController.create.bind(commentsControll
  *   delete:
  *     summary: Delete a comment by ID
  *     tags: [Comments]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
