@@ -201,14 +201,9 @@ export const authMiddleware = (
   res: Response,
   next: NextFunction
 ) => {
-
-  
-
   const authorization = req.header("authorization");
-  console.log(authorization);
 
   const token = authorization && authorization.split(" ")[1];
-  console.log(token);
 
   if (!token) {
     res.status(401).send("Unauthorized");
